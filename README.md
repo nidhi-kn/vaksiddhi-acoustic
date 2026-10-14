@@ -1,5 +1,53 @@
 # Vak-Siddhi
 
+## React workspace (Windows PowerShell)
+
+Prediction parity regression: `python -m unittest backend.test_prediction_parity -v` compares the original CLI and FastAPI using the exact local `test_audio/spoof_1.wav` and `test_audio/bonafide_1.wav` fixtures. Keep those WAV files available; tests do not download or substitute inputs. In `frontend`, run `npm.cmd run test:unit` for decision mapping tests and `npm.cmd run test:e2e -- --workers=1` with both servers running for live API/upload/history/layout tests. The UI uses `acoustic.prediction` directly, displays `acoustic.threshold`, and shows decimal model scores. Missing or unknown predictions are rejected rather than silently labeled below-threshold. Existing history entries without a supported prediction contract are excluded.
+
+The web workspace adds a local FastAPI adapter around the unchanged `demo.inference.AcousticAnalyzer`. The original GUI and CLI still work. Run these commands from the repository root. Use `npm.cmd` to avoid PowerShell execution-policy restrictions.
+
+Terminal 1, backend (reuse the existing Python environment, or create it using the setup below):
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r backend\requirements.txt
+.\.venv\Scripts\python.exe -m uvicorn backend.app:app --host 127.0.0.1 --port 8000
+```
+
+Terminal 2, frontend:
+
+```powershell
+cd frontend
+npm.cmd ci
+npm.cmd run dev -- --host 127.0.0.1 --port 5173
+```
+
+Open `http://127.0.0.1:5173`. Vite proxies `/api` to `http://127.0.0.1:8000`. If 5173 is occupied, Vite chooses another port; local CORS permits 5173 and 5174. API docs: `http://127.0.0.1:8000/docs`. `GET /api/health` reports whether the checkpoint loaded. `POST /api/analyze` accepts a multipart `file` field containing WAV audio.
+
+Verification:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest backend.test_api -v
+cd frontend
+npm.cmd run build
+npm.cmd run lint
+```
+
+The six routes provide dashboard activity, WAV upload and playback, microphone recording, browser-local history, model information and project scope. Dashboard metrics derive from completed requests and start empty. Evaluation numbers come from the saved JSON extracts and are labeled as historical sampled evaluations, including the validation inconsistency.
+
+Uploads are limited to 20 MiB, 120 seconds and 8 channels. Temporary files are deleted after inference. One checkpoint loads at startup; model execution is serialized. Initialization failures mark health unavailable and analysis returns 503; inspect backend logs. Only the first second is analyzed. Browser microphone audio is converted to mono PCM16 WAV after recording stops and is never streamed for inference.
+
+History retains up to 200 metadata records in localStorage, with search, filters and details; audio is never stored there. Microphone access requires localhost or HTTPS and MediaRecorder/Web Audio support. This local API has no authentication or rate limiting and should remain bound to loopback. Hosting needs access controls, request limits and a reverse proxy with SPA fallback. For a separate API origin, set `VITE_API_URL` and configure explicit backend CORS origins. No Docker or paid services are required.
+
+Browser checks (start both servers first):
+
+```powershell
+cd frontend
+npx.cmd playwright install chromium
+npm.cmd run test:e2e -- --workers=1
+```
+
+For an existing Chromium installation, set `$env:PLAYWRIGHT_CHROMIUM_EXECUTABLE` to its full executable path instead of installing a browser. Tests use a browser-provided synthetic microphone and generated WAV fixtures only as test inputs; they invoke real checkpoint inference and do not assert prediction correctness. Screenshots are saved under ignored `frontend/test-results/`. Automated checks cover upload validation, waveform pixels, API inference, microphone conversion, metadata persistence, search, detail dialogs, clearing history, drag-and-drop, network failure recovery and viewport fit at 1440, 390 and 320 pixels. A physical microphone, human audio playback and cross-browser behavior need manual verification. The original GUI import is tested; its interactive desktop workflow has not been automated.
+
 Vak-Siddhi is an academic acoustic voice-spoof screening prototype. The current demonstration analyzes **prerecorded audio only** using the existing MobileNetV2 student model and checkpoint. Semantic analysis, acoustic-semantic fusion, and live-call detection are outside the current demo scope. It does not verify a caller's identity or prove that a recording is safe.
 
 ## Architecture and preprocessing
