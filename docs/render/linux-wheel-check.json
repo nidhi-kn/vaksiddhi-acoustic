@@ -1,0 +1,68 @@
+{
+  "scope": "Published direct dependency wheels only; not a full resolver, installation or Linux runtime test.",
+  "packages": {
+    "torch": {
+      "version": "2.11.0+cpu",
+      "source": "https://download.pytorch.org/whl/cpu/torch/",
+      "wheel_urls": [
+        "https://download-r2.pytorch.org/whl/cpu/torch-2.11.0%2Bcpu-cp314-cp314-manylinux_2_28_x86_64.whl#sha256=f8481ea9088e4e5b81178a75aabdbb658bde8639bc1a15fd5d8f930abc966735"
+      ]
+    },
+    "torchvision": {
+      "version": "0.26.0+cpu",
+      "source": "https://download.pytorch.org/whl/cpu/torchvision/",
+      "wheel_urls": [
+        "https://download-r2.pytorch.org/whl/cpu/torchvision-0.26.0%2Bcpu-cp314-cp314-manylinux_2_28_x86_64.whl#sha256=78e88d0a57bfadcd17042aa92fe4dd1059e48fcaa2e54a10ac7f438c2eca10d5"
+      ]
+    },
+    "torchaudio": {
+      "version": "2.11.0+cpu",
+      "source": "https://download.pytorch.org/whl/cpu/torchaudio/",
+      "wheel_urls": [
+        "https://download-r2.pytorch.org/whl/cpu/torchaudio-2.11.0%2Bcpu-cp314-cp314-manylinux_2_28_x86_64.whl#sha256=34c5dcd704e17a2b01c097b4fe3b5f83c5cdbc42b9f2abd095e026c588f873d4"
+      ]
+    },
+    "numpy": {
+      "version": "2.5.3",
+      "source": "https://pypi.org/pypi/numpy/2.5.3/json",
+      "requires_python": ">=3.12",
+      "wheel_urls": [
+        "https://files.pythonhosted.org/packages/45/8f/9beacf79ca7c650688ad0baa80931adb988fe6e6e5d5903c23cc3dbd70eb/numpy-2.5.3-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "https://files.pythonhosted.org/packages/59/08/9df04103947b95e3b6b1f2ed1a70521f325647a31b82da6a2aae3a485508/numpy-2.5.3-cp314-cp314t-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "soundfile": {
+      "version": "0.14.0",
+      "source": "https://pypi.org/pypi/soundfile/0.14.0/json",
+      "requires_python": ">=3.10",
+      "wheel_urls": [
+        "https://files.pythonhosted.org/packages/b1/d1/5e338af9ca6ed0786cd5bb03f6d60de1c325728c1189014f3b59aae7403c/soundfile-0.14.0-py2.py3-none-any.whl",
+        "https://files.pythonhosted.org/packages/7b/a2/70fd4432b924684c372df8b0a45708c36c057ef3596c9eb53e0a806b980b/soundfile-0.14.0-py2.py3-none-manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "fastapi": {
+      "version": "0.143.0",
+      "source": "https://pypi.org/pypi/fastapi/0.143.0/json",
+      "requires_python": ">=3.10",
+      "wheel_urls": [
+        "https://files.pythonhosted.org/packages/bd/f4/27e386913417ad32aae42bba48b0c0cce40e9ff2fba1a871ca2702c37324/fastapi-0.143.0-py3-none-any.whl"
+      ]
+    },
+    "uvicorn": {
+      "version": "0.54.0",
+      "source": "https://pypi.org/pypi/uvicorn/0.54.0/json",
+      "requires_python": ">=3.10",
+      "wheel_urls": [
+        "https://files.pythonhosted.org/packages/38/0c/b54a4fdd7f90a3af8b02ebc9ce6712c2c208b7926a2f7bad95c33ebbe943/uvicorn-0.54.0-py3-none-any.whl"
+      ]
+    },
+    "python-multipart": {
+      "version": "0.0.32",
+      "source": "https://pypi.org/pypi/python-multipart/0.0.32/json",
+      "requires_python": ">=3.10",
+      "wheel_urls": [
+        "https://files.pythonhosted.org/packages/e1/04/e8135ebd1ad02c56ec633277529b2602ff99ff634be76cdba5744cf554fd/python_multipart-0.0.32-py3-none-any.whl"
+      ]
+    }
+  }
+}

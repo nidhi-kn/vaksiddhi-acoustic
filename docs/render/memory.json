@@ -1,0 +1,56 @@
+{
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python": "3.14.3",
+  "scope": "Fresh server process tree RSS on Windows, not Render Linux/container memory; 20ms polling. Windows launcher child included.",
+  "peak_rss_bytes_by_phase": {
+    "startup": 378912768,
+    "fixture_inference": 386945024,
+    "large_valid_upload": 453890048
+  },
+  "peak_rss_mb_decimal": 453.890048,
+  "peak_rss_mib": 432.86328125,
+  "windows_native_peak_working_set_bytes": 457924608,
+  "startup_seconds": 4.527554399996006,
+  "fixture_results": [
+    {
+      "file": "bonafide_1.wav",
+      "spoof_score": 0.0033067064359784126,
+      "prediction": "below_threshold",
+      "absolute_baseline_difference": 3.259629011154175e-09
+    },
+    {
+      "file": "bonafide_2.wav",
+      "spoof_score": 0.0008955037919804454,
+      "prediction": "below_threshold",
+      "absolute_baseline_difference": 2.561137080192566e-09
+    },
+    {
+      "file": "bonafide_3.wav",
+      "spoof_score": 0.006532700732350349,
+      "prediction": "below_threshold",
+      "absolute_baseline_difference": 3.725290298461914e-08
+    },
+    {
+      "file": "spoof_1.wav",
+      "spoof_score": 0.11987714469432831,
+      "prediction": "spoof",
+      "absolute_baseline_difference": 7.450580596923828e-09
+    },
+    {
+      "file": "spoof_2.wav",
+      "spoof_score": 0.11278260499238968,
+      "prediction": "spoof",
+      "absolute_baseline_difference": 1.862645149230957e-07
+    },
+    {
+      "file": "spoof_3.wav",
+      "spoof_score": 0.14850448071956635,
+      "prediction": "spoof",
+      "absolute_baseline_difference": 8.940696716308594e-08
+    }
+  ],
+  "large_upload_bytes": 15360044,
+  "large_upload_prediction": "spoof",
+  "configured_vercel_cors_preflight": "PASS",
+  "checkpoint_sha256": "4b8e30cf4f977571228688528de1e053dfe3a2e01b05b25a033432bdae91d980"
+}

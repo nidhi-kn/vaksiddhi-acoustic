@@ -1,6 +1,8 @@
 """Local API; model and preprocessing remain owned by demo.inference."""
 from contextlib import asynccontextmanager
 import logging
+import os
+from urllib.parse import urlsplit
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from threading import Lock
@@ -9,6 +11,7 @@ from time import perf_counter
 import soundfile as sf
 from fastapi import FastAPI, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from starlette.concurrency import run_in_threadpool
 
 from demo.inference import AcousticAnalyzer, AudioInputError
@@ -30,17 +33,36 @@ async def lifespan(app):
     app.state.analyzer = None
 
 
-app = FastAPI(title="Vak-Siddhi Acoustic API", lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=[
+def cors_origins():
+    origins = [
     "http://localhost:5173", "http://127.0.0.1:5173",
     "http://localhost:5174", "http://127.0.0.1:5174",
-], allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
+    ]
+    for origin in os.getenv("CORS_ORIGINS", "").split(","):
+        origin = origin.strip()
+        if not origin:
+            continue
+        parts = urlsplit(origin)
+        if parts.scheme not in ("http", "https") or not parts.netloc or "*" in origin or parts.path or parts.query or parts.fragment or parts.username or parts.password:
+            raise ValueError("CORS_ORIGINS must contain exact http(s) origins without paths or trailing slashes")
+        origins.append(origin)
+    return list(dict.fromkeys(origins))
+
+
+app = FastAPI(title="Vak-Siddhi Acoustic API", lifespan=lifespan)
+app.add_middleware(CORSMiddleware, allow_origins=cors_origins(), allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
 
 
 @app.get("/api/health")
 def health():
     ready = getattr(app.state, "analyzer", None) is not None
     return {"status": "ready" if ready else "unavailable", "model_loaded": ready}
+
+
+@app.get("/api/ready")
+def readiness():
+    status = health()
+    return JSONResponse(status, status_code=200 if status["model_loaded"] else 503)
 
 
 def analyze_path(path):
