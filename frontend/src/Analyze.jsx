@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { decode, MAX_BYTES, toWav } from "./audio";
 import { api } from "./lib";
-import { hasPredictionContract } from "./prediction";
+import { hasAnalysisResponse } from "./prediction";
 import { PageTitle, Result } from "./components";
 import Waveform from "./Waveform";
 export default function Analyze({ record = false, onSave }) {
@@ -166,7 +166,7 @@ export default function Analyze({ record = false, onSave }) {
       const form = new FormData();
       form.append("file", file);
       const { data } = await api.post("/api/analyze", form);
-      if (!hasPredictionContract(data)) {
+      if (!hasAnalysisResponse(data)) {
         setError(
           "The API returned an unsupported prediction contract. No result was classified or saved. Check the backend version and retry.",
         );

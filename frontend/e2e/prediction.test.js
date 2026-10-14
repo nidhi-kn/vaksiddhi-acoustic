@@ -4,6 +4,7 @@ import {
   predictionLabel,
   hasPredictionContract,
   modelScore,
+  hasAnalysisResponse,
 } from "../src/prediction.js";
 
 test("authoritative predictions override the larger bonafide score", () => {
@@ -35,6 +36,23 @@ test("authoritative predictions override the larger bonafide score", () => {
   );
   assert.equal(modelScore(spoof.acoustic.spoof_score), "0.11987715");
   assert.equal(modelScore(bonafide.acoustic.spoof_score), "0.00330671");
+});
+
+test("incomplete or incompatible API responses never reach the result view", () => {
+  const complete = {
+    acoustic: { prediction: "below_threshold", threshold: .05530281, spoof_score: .01, bonafide_score: .99 },
+    audio_file: "sample.wav", message: "Inconclusive", sample_rate_hz: 16000,
+    processing_ms: 40, limitations: ["First second only"],
+  };
+  assert.equal(hasAnalysisResponse(complete), true);
+  for (const key of ["audio_file", "message", "sample_rate_hz", "processing_ms", "limitations"]) {
+    const missing = { ...complete };
+    delete missing[key];
+    assert.equal(hasAnalysisResponse(missing), false, key);
+  }
+  assert.equal(hasAnalysisResponse({ ...complete, limitations: "invalid" }), false);
+  assert.equal(hasAnalysisResponse({ ...complete, acoustic: { ...complete.acoustic, threshold: .5 } }), false);
+  assert.equal(hasAnalysisResponse({ ...complete, acoustic: { ...complete.acoustic, prediction: "bonafide" } }), false);
 });
 test("missing and unknown decisions never default to a genuine or inconclusive result", () => {
   for (const prediction of [undefined, null, "bonafide", "__proto__"]) {

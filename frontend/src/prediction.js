@@ -21,3 +21,20 @@ export function hasPredictionContract(result) {
   );
 }
 export const modelScore = (value) => value.toFixed(8);
+
+// Validate every field consumed by Result before rendering or persisting it.
+// The backend decision remains authoritative; this never reclassifies scores.
+export function hasAnalysisResponse(result) {
+  return (
+    hasPredictionContract(result) &&
+    result.acoustic.threshold === 0.05530281 &&
+    typeof result.audio_file === "string" &&
+    typeof result.message === "string" &&
+    Number.isFinite(result.sample_rate_hz) &&
+    result.sample_rate_hz > 0 &&
+    Number.isFinite(result.processing_ms) &&
+    result.processing_ms >= 0 &&
+    Array.isArray(result.limitations) &&
+    result.limitations.every((value) => typeof value === "string")
+  );
+}

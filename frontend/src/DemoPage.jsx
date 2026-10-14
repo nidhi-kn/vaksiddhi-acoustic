@@ -23,7 +23,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { api } from "./lib";
-import { hasPredictionContract } from "./prediction";
+import { hasAnalysisResponse } from "./prediction";
 import { decode } from "./audio";
 import { demoSamples } from "./demoSamples";
 import { PageTitle, Result } from "./components";
@@ -157,7 +157,7 @@ export default function DemoPage({ onSave }) {
         const { data } = await api.post("/api/analyze", form, {
           signal: controller.signal,
         });
-        if (!hasPredictionContract(data))
+        if (!hasAnalysisResponse(data))
           throw new Error(
             "Unsupported API prediction contract. No comparison was saved.",
           );

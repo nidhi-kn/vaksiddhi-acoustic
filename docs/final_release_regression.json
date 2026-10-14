@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "checkpoint_sha256_before_and_after": "4b8e30cf4f977571228688528de1e053dfe3a2e01b05b25a033432bdae91d980",
+  "api": "http://127.0.0.1:8010",
+  "numerical_tolerance": 1e-07,
+  "results": [
+    {
+      "file": "bonafide_1.wav",
+      "sha256": "5ecc19de809874eb339ac7cad20e8029f25898d90fcf481705d850cda1cefd1d",
+      "declared_dataset_label": "bonafide",
+      "ground_truth_provenance": "Original downloader class mapping and baseline fixture naming; original source utterance IDs were not retained.",
+      "cli_spoof_score": 0.0033067096956074238,
+      "api_spoof_score": 0.0033067096956074238,
+      "absolute_difference": 0.0,
+      "prediction": "below_threshold",
+      "matches_declared_label": true
+    },
+    {
+      "file": "bonafide_2.wav",
+      "sha256": "4dd1014022a4efd34f76f666ecd73b80045900d3f3835f8181be82a3d8ba4a36",
+      "declared_dataset_label": "bonafide",
+      "ground_truth_provenance": "Original downloader class mapping and baseline fixture naming; original source utterance IDs were not retained.",
+      "cli_spoof_score": 0.0008955063531175256,
+      "api_spoof_score": 0.0008955063531175256,
+      "absolute_difference": 0.0,
+      "prediction": "below_threshold",
+      "matches_declared_label": true
+    },
+    {
+      "file": "bonafide_3.wav",
+      "sha256": "419cff05b82c651bfec060ae9e0bce8af0854365c0c6791ec42d73b926fbddcd",
+      "declared_dataset_label": "bonafide",
+      "ground_truth_provenance": "Original downloader class mapping and baseline fixture naming; original source utterance IDs were not retained.",
+      "cli_spoof_score": 0.006532737985253334,
+      "api_spoof_score": 0.006532737985253334,
+      "absolute_difference": 0.0,
+      "prediction": "below_threshold",
+      "matches_declared_label": true
+    },
+    {
+      "file": "spoof_1.wav",
+      "sha256": "180f60288c5147c590b6285aafaf85b6a42374b19b423add53f3899f515ac423",
+      "declared_dataset_label": "spoof",
+      "ground_truth_provenance": "Original downloader class mapping and baseline fixture naming; original source utterance IDs were not retained.",
+      "cli_spoof_score": 0.1198771521449089,
+      "api_spoof_score": 0.1198771521449089,
+      "absolute_difference": 0.0,
+      "prediction": "spoof",
+      "matches_declared_label": true
+    },
+    {
+      "file": "spoof_2.wav",
+      "sha256": "280b1c1d8b2d5cce878c0e254afe67fe8e59241b7a6759f58f708b6e7fdd3a39",
+      "declared_dataset_label": "spoof",
+      "ground_truth_provenance": "Original downloader class mapping and baseline fixture naming; original source utterance IDs were not retained.",
+      "cli_spoof_score": 0.1127827912569046,
+      "api_spoof_score": 0.1127827912569046,
+      "absolute_difference": 0.0,
+      "prediction": "spoof",
+      "matches_declared_label": true
+    },
+    {
+      "file": "spoof_3.wav",
+      "sha256": "dbb12d90b9161f1aaed620439ef20e8f41c00b2b9a9eb634ed889fe4fcc33670",
+      "declared_dataset_label": "spoof",
+      "ground_truth_provenance": "Original downloader class mapping and baseline fixture naming; original source utterance IDs were not retained.",
+      "cli_spoof_score": 0.1485045701265335,
+      "api_spoof_score": 0.1485045701265335,
+      "absolute_difference": 0.0,
+      "prediction": "spoof",
+      "matches_declared_label": true
+    }
+  ],
+  "source_commit": "d5f97ca74e8fd2ecabf108e706ad3ba98a0fd8b5"
+}

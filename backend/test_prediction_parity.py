@@ -12,11 +12,15 @@ ROOT = Path(__file__).resolve().parents[1]
 CASES = [
     ('spoof_1.wav', .1198771521449089, 'spoof', 'elevated'),
     ('bonafide_1.wav', .0033067096956074238, 'below_threshold', 'inconclusive'),
+    ('bonafide_2.wav', .0008955063531175256, 'below_threshold', 'inconclusive'),
+    ('bonafide_3.wav', .006532737985253334, 'below_threshold', 'inconclusive'),
+    ('spoof_2.wav', .1127827912569046, 'spoof', 'elevated'),
+    ('spoof_3.wav', .1485045701265335, 'spoof', 'elevated'),
 ]
 
 
 class PredictionParityTests(unittest.TestCase):
-    def test_original_cli_and_api_agree_on_both_fixtures(self):
+    def test_original_cli_and_api_agree_on_all_six_fixtures(self):
         with TestClient(app) as client:
             for filename, score, prediction, risk in CASES:
                 with self.subTest(filename=filename):
