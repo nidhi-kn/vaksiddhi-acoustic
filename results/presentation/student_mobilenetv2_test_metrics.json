@@ -1,0 +1,29 @@
+{
+  "model": "MobileNetV2Student",
+  "checkpoint": "checkpoints/student_mobilenetv2_kd_corrected_teacher.pt",
+  "dataset": "Bisher/ASVspoof_2019_LA",
+  "split": "test",
+  "selection_method": "seeded_stream_sampling",
+  "examples_evaluated": 2000,
+  "class_counts": {
+    "bonafide_0": 1000,
+    "spoof_1": 1000
+  },
+  "accuracy": 0.8715,
+  "precision_spoof_class": 0.9868938401048493,
+  "recall_spoof_class": 0.753,
+  "f1_spoof_class": 0.8542257515598412,
+  "roc_auc": 0.8971650000000001,
+  "eer_approx": 0.17550000000000002,
+  "classification_threshold": 0.05530281,
+  "threshold_source": "validation-derived fixed threshold; not optimized on this evaluation split",
+  "confusion_matrix_labels": [
+    "bonafide_0",
+    "spoof_1"
+  ],
+  "confusion_matrix": [
+    [990, 10],
+    [247, 753]
+  ],
+  "notes": "Path-normalized presentation extract from the saved test metrics. Existing diagnostics attribute most false negatives in this sample to spoof systems A17-A19."
+}

@@ -1,0 +1,27 @@
+{
+  "model": "MobileNetV2Student",
+  "checkpoint": "checkpoints/student_mobilenetv2_kd_corrected_teacher.pt",
+  "dataset": "Bisher/ASVspoof_2019_LA",
+  "split": "validation",
+  "selection_method": "saved_manifest",
+  "examples_evaluated": 2000,
+  "class_counts": {
+    "bonafide_0": 1000,
+    "spoof_1": 1000
+  },
+  "accuracy": 0.5,
+  "precision_spoof_class": 0.0,
+  "recall_spoof_class": 0.0,
+  "f1_spoof_class": 0.0,
+  "roc_auc": 0.999758,
+  "eer_approx": 0.0030000000000000014,
+  "confusion_matrix_labels": [
+    "bonafide_0",
+    "spoof_1"
+  ],
+  "confusion_matrix": [
+    [1000, 0],
+    [1000, 0]
+  ],
+  "notes": "Path-normalized presentation extract from the saved validation metrics. The original metrics file and score arrays remain unchanged locally. Saved predictions are all bonafide even though the saved score array contains values above the 0.05530281 test operating point; thresholded validation behavior is inconsistent and should not be claimed."
+}
