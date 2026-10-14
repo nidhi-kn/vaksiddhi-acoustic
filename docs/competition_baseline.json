@@ -1,0 +1,376 @@
+{
+  "scope": "Six local demonstration samples; NOT representative or held-out validation evidence.",
+  "label_provenance": "download_samples.py maps dataset label 0 to bonafide and 1 to spoof. Original utterance IDs and per-file protocol entries were not retained; filenames carry declared dataset labels.",
+  "dataset": "SpeechAntiSpoofingBenchmarks/ASVspoof2019_LA",
+  "split": "test/evaluation",
+  "selection": "First three encountered recordings per class in downloader stream; no random sampling.",
+  "examples": 6,
+  "class_counts": {
+    "bonafide": 3,
+    "spoof": 3
+  },
+  "checkpoint_sha256": "4b8e30cf4f977571228688528de1e053dfe3a2e01b05b25a033432bdae91d980",
+  "threshold": 0.05530281,
+  "environment": {
+    "python": "3.14.3",
+    "torch": "2.11.0+cpu",
+    "device": "cpu",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "torch_threads": 12
+  },
+  "model_load_ms": 348.9451999994344,
+  "confusion_matrix_true_rows_predicted_columns_bonafide_spoof": [
+    [
+      3,
+      0
+    ],
+    [
+      0,
+      3
+    ]
+  ],
+  "spoof_recall": 1.0,
+  "bonafide_false_alert_rate": 0.0,
+  "warm_latency_ms": {
+    "min": 31.24759999991511,
+    "p05": 31.783780000841944,
+    "median": 33.28069999952277,
+    "p95": 35.002175000590796,
+    "max": 35.371500001929235
+  },
+  "score_distributions": {
+    "bonafide": {
+      "min": 0.0008955063531175256,
+      "p05": 0.0011366266873665154,
+      "median": 0.0033067096956074238,
+      "p95": 0.006210135156288743,
+      "max": 0.006532737985253334
+    },
+    "spoof": {
+      "min": 0.1127827912569046,
+      "p05": 0.11349222734570504,
+      "median": 0.1198771521449089,
+      "p95": 0.14564182832837105,
+      "max": 0.1485045701265335
+    }
+  },
+  "multi_segment_decision": "NOT ENABLED: no independent development data, no validated aggregation threshold or generalization improvement. Test diagnostics are not used for selection.",
+  "rows": [
+    {
+      "file": "bonafide_1.wav",
+      "declared_label": "bonafide",
+      "sha256": "5ecc19de809874eb339ac7cad20e8029f25898d90fcf481705d850cda1cefd1d",
+      "duration_seconds": 4.39275,
+      "acoustic": {
+        "model": "MobileNetV2Student",
+        "spoof_score": 0.0033067096956074238,
+        "bonafide_score": 0.9966932535171509,
+        "prediction": "below_threshold",
+        "threshold": 0.05530281,
+        "threshold_source": "fixed validation-selected operating point recorded by the existing test evaluation",
+        "class_mapping": {
+          "0": "bonafide",
+          "1": "spoof"
+        }
+      },
+      "risk_level": "inconclusive",
+      "warm_latency_ms": [
+        35.371500001929235,
+        32.4335000004794,
+        34.9370000003546
+      ],
+      "window_diagnostics": {
+        "segments": [
+          {
+            "start_seconds": 0.0,
+            "spoof_score": 0.0033067096956074238
+          },
+          {
+            "start_seconds": 0.5,
+            "spoof_score": 0.010617836378514767
+          },
+          {
+            "start_seconds": 1.0,
+            "spoof_score": 0.007297522388398647
+          },
+          {
+            "start_seconds": 1.5,
+            "spoof_score": 0.15113095939159393
+          },
+          {
+            "start_seconds": 2.0,
+            "spoof_score": 0.16077876091003418
+          },
+          {
+            "start_seconds": 2.5,
+            "spoof_score": 0.19422785937786102
+          },
+          {
+            "start_seconds": 3.0,
+            "spoof_score": 0.17649070918560028
+          },
+          {
+            "start_seconds": 3.39275,
+            "spoof_score": 0.16117574274539948
+          }
+        ],
+        "processing_ms": 254.62159999733558,
+        "unvalidated_aggregates": {
+          "max": 0.19422785937786102,
+          "mean": 0.10812826250912622,
+          "top_3_mean": 0.17729810376962027
+        }
+      }
+    },
+    {
+      "file": "bonafide_2.wav",
+      "declared_label": "bonafide",
+      "sha256": "4dd1014022a4efd34f76f666ecd73b80045900d3f3835f8181be82a3d8ba4a36",
+      "duration_seconds": 2.12825,
+      "acoustic": {
+        "model": "MobileNetV2Student",
+        "spoof_score": 0.0008955063531175256,
+        "bonafide_score": 0.9991044402122498,
+        "prediction": "below_threshold",
+        "threshold": 0.05530281,
+        "threshold_source": "fixed validation-selected operating point recorded by the existing test evaluation",
+        "class_mapping": {
+          "0": "bonafide",
+          "1": "spoof"
+        }
+      },
+      "risk_level": "inconclusive",
+      "warm_latency_ms": [
+        33.21439999854192,
+        32.465300002513686,
+        32.46029999718303
+      ],
+      "window_diagnostics": {
+        "segments": [
+          {
+            "start_seconds": 0.0,
+            "spoof_score": 0.0008955063531175256
+          },
+          {
+            "start_seconds": 0.5,
+            "spoof_score": 0.12330767512321472
+          },
+          {
+            "start_seconds": 1.0,
+            "spoof_score": 0.06298885494470596
+          },
+          {
+            "start_seconds": 1.12825,
+            "spoof_score": 0.11817337572574615
+          }
+        ],
+        "processing_ms": 123.84849999943981,
+        "unvalidated_aggregates": {
+          "max": 0.12330767512321472,
+          "mean": 0.07634135303669609,
+          "top_3_mean": 0.10148996859788895
+        }
+      }
+    },
+    {
+      "file": "bonafide_3.wav",
+      "declared_label": "bonafide",
+      "sha256": "419cff05b82c651bfec060ae9e0bce8af0854365c0c6791ec42d73b926fbddcd",
+      "duration_seconds": 2.2598125,
+      "acoustic": {
+        "model": "MobileNetV2Student",
+        "spoof_score": 0.006532737985253334,
+        "bonafide_score": 0.9934672713279724,
+        "prediction": "below_threshold",
+        "threshold": 0.05530281,
+        "threshold_source": "fixed validation-selected operating point recorded by the existing test evaluation",
+        "class_mapping": {
+          "0": "bonafide",
+          "1": "spoof"
+        }
+      },
+      "risk_level": "inconclusive",
+      "warm_latency_ms": [
+        34.58640000098967,
+        33.762799997930415,
+        33.445900000515394
+      ],
+      "window_diagnostics": {
+        "segments": [
+          {
+            "start_seconds": 0.0,
+            "spoof_score": 0.006532737985253334
+          },
+          {
+            "start_seconds": 0.5,
+            "spoof_score": 0.01896819844841957
+          },
+          {
+            "start_seconds": 1.0,
+            "spoof_score": 0.12778067588806152
+          },
+          {
+            "start_seconds": 1.2598125,
+            "spoof_score": 0.15626975893974304
+          }
+        ],
+        "processing_ms": 129.65249999979278,
+        "unvalidated_aggregates": {
+          "max": 0.15626975893974304,
+          "mean": 0.07738784281536937,
+          "top_3_mean": 0.10100621109207471
+        }
+      }
+    },
+    {
+      "file": "spoof_1.wav",
+      "declared_label": "spoof",
+      "sha256": "180f60288c5147c590b6285aafaf85b6a42374b19b423add53f3899f515ac423",
+      "duration_seconds": 1.4269375,
+      "acoustic": {
+        "model": "MobileNetV2Student",
+        "spoof_score": 0.1198771521449089,
+        "bonafide_score": 0.8801227807998657,
+        "prediction": "spoof",
+        "threshold": 0.05530281,
+        "threshold_source": "fixed validation-selected operating point recorded by the existing test evaluation",
+        "class_mapping": {
+          "0": "bonafide",
+          "1": "spoof"
+        }
+      },
+      "risk_level": "elevated",
+      "warm_latency_ms": [
+        32.56409999812604,
+        33.34700000050361,
+        33.39899999991758
+      ],
+      "window_diagnostics": {
+        "segments": [
+          {
+            "start_seconds": 0.0,
+            "spoof_score": 0.1198771521449089
+          },
+          {
+            "start_seconds": 0.4269375,
+            "spoof_score": 0.2552776634693146
+          }
+        ],
+        "processing_ms": 62.13019999995595,
+        "unvalidated_aggregates": {
+          "max": 0.2552776634693146,
+          "mean": 0.18757740780711174,
+          "top_3_mean": 0.18757740780711174
+        }
+      }
+    },
+    {
+      "file": "spoof_2.wav",
+      "declared_label": "spoof",
+      "sha256": "280b1c1d8b2d5cce878c0e254afe67fe8e59241b7a6759f58f708b6e7fdd3a39",
+      "duration_seconds": 3.9764375,
+      "acoustic": {
+        "model": "MobileNetV2Student",
+        "spoof_score": 0.1127827912569046,
+        "bonafide_score": 0.8872172236442566,
+        "prediction": "spoof",
+        "threshold": 0.05530281,
+        "threshold_source": "fixed validation-selected operating point recorded by the existing test evaluation",
+        "class_mapping": {
+          "0": "bonafide",
+          "1": "spoof"
+        }
+      },
+      "risk_level": "elevated",
+      "warm_latency_ms": [
+        31.878400001005502,
+        32.30439999970258,
+        32.49569999752566
+      ],
+      "window_diagnostics": {
+        "segments": [
+          {
+            "start_seconds": 0.0,
+            "spoof_score": 0.1127827912569046
+          },
+          {
+            "start_seconds": 0.5,
+            "spoof_score": 0.14434394240379333
+          },
+          {
+            "start_seconds": 1.0,
+            "spoof_score": 0.12862074375152588
+          },
+          {
+            "start_seconds": 1.5,
+            "spoof_score": 0.16363097727298737
+          },
+          {
+            "start_seconds": 2.0,
+            "spoof_score": 0.13926783204078674
+          },
+          {
+            "start_seconds": 2.5,
+            "spoof_score": 0.12048626691102982
+          },
+          {
+            "start_seconds": 2.9764375,
+            "spoof_score": 0.10612823814153671
+          }
+        ],
+        "processing_ms": 218.305499998678,
+        "unvalidated_aggregates": {
+          "max": 0.16363097727298737,
+          "mean": 0.13075154168265207,
+          "top_3_mean": 0.14908091723918915
+        }
+      }
+    },
+    {
+      "file": "spoof_3.wav",
+      "declared_label": "spoof",
+      "sha256": "dbb12d90b9161f1aaed620439ef20e8f41c00b2b9a9eb634ed889fe4fcc33670",
+      "duration_seconds": 1.559875,
+      "acoustic": {
+        "model": "MobileNetV2Student",
+        "spoof_score": 0.1485045701265335,
+        "bonafide_score": 0.8514954447746277,
+        "prediction": "spoof",
+        "threshold": 0.05530281,
+        "threshold_source": "fixed validation-selected operating point recorded by the existing test evaluation",
+        "class_mapping": {
+          "0": "bonafide",
+          "1": "spoof"
+        }
+      },
+      "risk_level": "elevated",
+      "warm_latency_ms": [
+        33.57309999773861,
+        31.24759999991511,
+        33.38470000016969
+      ],
+      "window_diagnostics": {
+        "segments": [
+          {
+            "start_seconds": 0.0,
+            "spoof_score": 0.1485045701265335
+          },
+          {
+            "start_seconds": 0.5,
+            "spoof_score": 0.18956629931926727
+          },
+          {
+            "start_seconds": 0.559875,
+            "spoof_score": 0.178019717335701
+          }
+        ],
+        "processing_ms": 89.87139999953797,
+        "unvalidated_aggregates": {
+          "max": 0.18956629931926727,
+          "mean": 0.17203019559383392,
+          "top_3_mean": 0.17203019559383392
+        }
+      }
+    }
+  ]
+}

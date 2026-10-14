@@ -1,5 +1,9 @@
 # Vak-Siddhi
 
+## Competition Presentation
+
+The frozen competition workflow is on the `competition-readiness` branch. Open `/demo` for real local side-by-side comparisons using the bundled WAV samples. See [readiness, measured results and startup](docs/COMPETITION_READINESS.md) and the [90-second walkthrough and Q&A](docs/COMPETITION_DEMO.md). The default model remains the original first-second analyzer; multi-window diagnostics are offline research only.
+
 ## React workspace (Windows PowerShell)
 
 Prediction parity regression: `python -m unittest backend.test_prediction_parity -v` compares the original CLI and FastAPI using the exact local `test_audio/spoof_1.wav` and `test_audio/bonafide_1.wav` fixtures. Keep those WAV files available; tests do not download or substitute inputs. In `frontend`, run `npm.cmd run test:unit` for decision mapping tests and `npm.cmd run test:e2e -- --workers=1` with both servers running for live API/upload/history/layout tests. The UI uses `acoustic.prediction` directly, displays `acoustic.threshold`, and shows decimal model scores. Missing or unknown predictions are rejected rather than silently labeled below-threshold. Existing history entries without a supported prediction contract are excluded.

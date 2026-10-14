@@ -16,6 +16,26 @@ export function ModelPage() {
         title="Model information"
         text="The architecture, evidence and limits behind every result."
       />
+      <div
+        className="architecture-flow"
+        role="img"
+        aria-label="WAV decode, mono and 16 kHz resample, first-second crop or padding, 80 by 101 log-Mel, MobileNetV2 student, scores and fixed-threshold alert"
+      >
+        {[
+          "WAV audio",
+          "Mono / 16 kHz",
+          "First 1 second",
+          "80 × 101 log-Mel",
+          "MobileNetV2",
+          "Scores + threshold",
+        ].map((step, index) => (
+          <div key={step}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <strong>{step}</strong>
+            {index < 5 && <ArrowRight size={16} />}
+          </div>
+        ))}
+      </div>
       <section className="model-intro">
         <div className="model-symbol">
           <Database size={42} />
@@ -70,7 +90,13 @@ export function ModelPage() {
               ["Recorded accuracy", percent(metrics.accuracy)],
               ["ROC-AUC", metrics.roc_auc.toFixed(6)],
               ["Spoof recall", percent(metrics.recall_spoof_class)],
-              ["Approximate EER", percent(metrics.eer_approx)],
+              [
+                "Bonafide false-alert rate",
+                percent(
+                  metrics.confusion_matrix[0][1] /
+                    metrics.class_counts.bonafide_0,
+                ),
+              ],
             ].map(([label, value]) => (
               <div key={label}>
                 <span>{label}</span>

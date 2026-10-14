@@ -27,11 +27,13 @@ import Analyze from "./Analyze";
 import HistoryPage from "./HistoryPage";
 import { ModelPage, About } from "./Information";
 const Dashboard = lazy(() => import("./Dashboard"));
+const DemoPage = lazy(() => import("./DemoPage"));
 const navigation = [
   ["/", "Dashboard", LayoutDashboard],
   ["/analyze", "Analyze audio", AudioLines],
   ["/record", "Record audio", Mic],
   ["/history", "Analysis history", History],
+  ["/demo", "Competition demo", ShieldCheck],
   ["/model", "Model information", SlidersHorizontal],
   ["/about", "About the project", Info],
 ];
@@ -92,7 +94,7 @@ function Shell() {
               to={path}
               end
               onClick={() => setMenu(false)}
-              className={index === 4 ? "nav-divider" : ""}
+              className={index === 5 ? "nav-divider" : ""}
             >
               <Icon size={19} />
               {label}
@@ -206,6 +208,16 @@ function Shell() {
                   }
                 />
                 <Route path="/model" element={<ModelPage />} />
+                <Route
+                  path="/demo"
+                  element={
+                    <DemoPage
+                      onSave={(batch) =>
+                        persist([...batch, ...items].slice(0, 200))
+                      }
+                    />
+                  }
+                />
                 <Route path="/about" element={<About />} />
                 <Route
                   path="*"
