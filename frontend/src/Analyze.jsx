@@ -353,7 +353,7 @@ export default function Analyze({ record = false, onSave }) {
               animate={{ opacity: 1, y: 0 }}
               className="panel"
             >
-              <Result result={result} />
+              <Result result={result} autoReveal />
             </motion.div>
           )}
         </section>

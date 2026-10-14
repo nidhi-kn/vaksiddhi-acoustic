@@ -24,12 +24,12 @@ test("offline local demo computes real results, persists both records and render
       received.push(await response.json());
   });
   await page.getByRole("button", { name: "Run comparison" }).click();
-  await expect(page.locator(".demo-sample.bonafide .result .badge")).toHaveText(
-    "No Spoof Alert / Inconclusive",
+  await expect(page.locator(".demo-sample.bonafide .verdict-title")).toHaveText(
+    "NO SPOOF ALERT — INCONCLUSIVE",
     { timeout: 30000 },
   );
-  await expect(page.locator(".demo-sample.spoof .result .badge")).toHaveText(
-    "Potential Spoof Detected",
+  await expect(page.locator(".demo-sample.spoof .verdict-title")).toHaveText(
+    "POTENTIAL SPOOF DETECTED",
   );
   await expect(
     page.getByRole("button", { name: "Run comparison" }),
@@ -67,7 +67,7 @@ test("offline local demo computes real results, persists both records and render
       .toBe(true);
     await page.waitForTimeout(1800);
     await expect(
-      page.locator(".demo-sample.spoof .result .badge"),
+      page.locator(".demo-sample.spoof .verdict-title"),
     ).toBeVisible();
     await page.screenshot({
       path: `test-results/competition-${viewport.width}.png`,

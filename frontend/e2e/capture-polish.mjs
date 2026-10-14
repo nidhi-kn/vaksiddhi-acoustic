@@ -16,6 +16,7 @@ try {
     await page.goto("/demo");
     await page.getByRole("button", { name: "Run comparison" }).click();
     await page.locator(".demo-sample.spoof .result").waitFor({ timeout: 30000 });
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     await page.screenshot({ path: resolve(output, `demo-${width}.png`), fullPage: true });
     await page.goto("/");
     await page.locator(".metric").first().waitFor();
@@ -25,6 +26,7 @@ try {
     await page.locator("input[type=file]").setInputFiles(resolve("../test_audio/spoof_1.wav"));
     await page.getByRole("button", { name: "Analyze recording" }).click();
     await page.locator(".result").waitFor({ timeout: 30000 });
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     await page.screenshot({ path: resolve(output, `analysis-${width}.png`), fullPage: true });
     await context.close();
   }

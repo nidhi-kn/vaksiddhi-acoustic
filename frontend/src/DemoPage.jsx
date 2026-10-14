@@ -126,6 +126,13 @@ export default function DemoPage({ onSave }) {
     [error, setError] = useState("");
   const request = useRef(null),
     reduceMotion = useReducedMotion();
+  const comparison = useRef(null);
+  useEffect(() => {
+    if (busy || !results.bonafide || !results.spoof) return;
+    const verdict = comparison.current?.querySelector(".detection-verdict");
+    if (verdict && verdict.getBoundingClientRect().top > window.innerHeight - 180)
+      verdict.scrollIntoView({ behavior: reduceMotion ? "instant" : "smooth", block: "start" });
+  }, [busy, results, reduceMotion]);
   useEffect(() => () => request.current?.abort(), []);
   function choose(label, name) {
     setSelection((current) => ({
@@ -251,7 +258,7 @@ export default function DemoPage({ onSave }) {
           </p>
         </div>
       )}
-      <div className="demo-comparison">
+      <div className="demo-comparison" ref={comparison}>
         {["bonafide", "spoof"].map((label) => (
           <SamplePanel
             key={selection[label].name}

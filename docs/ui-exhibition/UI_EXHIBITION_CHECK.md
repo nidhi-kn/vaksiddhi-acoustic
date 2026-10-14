@@ -10,7 +10,8 @@ Branch: `ui-exhibition-polish`, created from tested stabilization commit `29be9d
 - Stronger type hierarchy, violet accents, warmer status colors, rounded surfaces and restrained shadows. Local activity cards have icon tiles and hover states; their source remains browser history. Activity is explicitly labeled as local activity, not model performance.
 - Styled real-data chart tooltips/legend and a linked empty state. Recharts honors reduced-motion preference on the dashboard; the decorative motif stops, too.
 - More prominent upload, waveform, playback and analysis controls; clearer drag hover, loading, decoding and error surfaces without changing handlers.
-- Result status and supporting explanation precede scores. A threshold callout displays the existing response value; the original decimal score formatter, threshold and probability disclaimer remain unchanged. Technical details follow the scores.
+- A large orange warning or calm lavender inconclusive verdict leads every result. Only the real spoof model score and fixed threshold are displayed, with the threshold relationship explicitly stated. Bonafide scores remain in the API/raw outputs and parity tests but are never rendered. Technical metadata and detailed limitations are in a secondary disclosure.
+- Upload/record results reveal themselves by scrolling when outside the visible viewport. Completed comparisons reveal their first verdict when needed. Reduced motion disables smooth scrolling and the subtle verdict entrance animation.
 - Comparison cards distinguish inherited dataset truth from the computed model result; larger type and stronger status contrast improve projector readability.
 
 ## Gates
@@ -18,8 +19,8 @@ Branch: `ui-exhibition-polish`, created from tested stabilization commit `29be9d
 | Verification | Result |
 |---|---|
 | Existing frontend unit suite | PASS: 4/4 |
-| Existing production browser suite | PASS: all 9 existing tests |
-| Added exhibition browser checks | PASS: 2/2, total 11/11 |
+| Existing production browser suite | PASS: all 9 existing tests, updated result selectors for the new verdict headings |
+| Added exhibition/verdict browser checks | PASS: 4/4, total 13/13; both real verdict states, mobile reveal, hidden bonafide scores, history/demo consistency and technical disclosure |
 | Final light-theme smoke rerun | PASS: 3/3 (offline demo, five-width layouts, reduced-motion motif); after screenshots refreshed |
 | ESLint / Vite production build | PASS |
 | Upload / drag/drop / waveform / playback | PASS |
@@ -34,7 +35,7 @@ Branch: `ui-exhibition-polish`, created from tested stabilization commit `29be9d
 
 No dependencies were added. Screenshots use real local inference and browser history created by those requests, not fabricated analytics. Timestamps and processing times naturally differ between captures. Screenshot capture uses reduced motion for consistent composition. Native audio controls retain browser behavior.
 
-The local runtime uses the existing environment and frontend dependencies through junctions into the original workspace. Preserve that workspace; no install is needed to preview. The production CSS is approximately 10.3 kB gzipped (baseline 7.19 kB); no new network assets or fonts.
+The local runtime uses the existing environment and frontend dependencies through junctions into the original workspace. Preserve that workspace; no install is needed to preview. The production CSS is approximately 10.8 kB gzipped (baseline 7.19 kB); no new network assets or fonts.
 
 ## Exact changed files
 
@@ -44,10 +45,16 @@ Runtime presentation only:
 - `frontend/src/components.jsx`
 - `frontend/src/main.jsx`
 - `frontend/src/exhibition.css` (new)
+- `frontend/src/Analyze.jsx` (result auto-reveal only)
+- `frontend/src/DemoPage.jsx` (completed-verdict auto-reveal only)
 
 Verification/documentation:
 
 - `frontend/e2e/exhibition.spec.js` (new responsive/focus/reduced-motion checks)
+- `frontend/e2e/verdict.spec.js` (new real spoof/below-threshold regression checks)
+- `frontend/e2e/competition.spec.js` (updated result heading selectors)
+- `frontend/e2e/prediction-parity.spec.js` (updated headings, hidden score and threshold-relationship assertions; both raw API scores remain checked)
+- `frontend/e2e/release.spec.js` (updated result heading selector)
 - `frontend/e2e/capture-polish.mjs` (new reproducible real-data capture utility)
 - `docs/ui-exhibition/UI_EXHIBITION_CHECK.md` (this file)
 - Twelve PNGs listed individually in the comparison table below.

@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { FileAudio, ArrowRight, Info, X, ChevronRight, AudioLines } from "lucide-react";
-import { percent, date } from "./lib";
-import { predictionLabel, modelScore } from "./prediction";
+import { FileAudio, ArrowRight, Info, X, ChevronRight, ShieldAlert, ShieldQuestion } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
+import { date } from "./lib";
+import { predictionLabel, modelScore, hasAnalysisResponse } from "./prediction";
 export function Badge({ prediction }) {
   return (
     <span className={`badge ${prediction === "spoof" ? "warning" : "neutral"}`}>
@@ -25,34 +26,35 @@ export function Empty({
     </div>
   );
 }
-export function Result({ result }) {
+export function Result({ result, autoReveal = false }) {
+  const ref = useRef(null);
+  const reducedMotion = useReducedMotion();
+  useEffect(() => {
+    if (!autoReveal || !ref.current) return;
+    const bounds = ref.current.getBoundingClientRect();
+    if (bounds.top < 0 || bounds.top > window.innerHeight - 180)
+      ref.current.scrollIntoView({ behavior: reducedMotion ? "instant" : "smooth", block: "start" });
+  }, [result, autoReveal, reducedMotion]);
+  if (!hasAnalysisResponse(result)) return <div role="alert" className="error">Prediction unavailable. No acoustic verdict can be displayed.</div>;
+  const spoof = result.acoustic.prediction === "spoof";
+  const VerdictIcon = spoof ? ShieldAlert : ShieldQuestion;
   return (
-    <div className="result">
-      <div className="section-title result-heading">
-        <div><span className="eyebrow"><AudioLines size={13} /> ACOUSTIC SCREENING</span><h2>Analysis result</h2></div>
-        <Badge prediction={result.acoustic.prediction} />
-      </div>
-      <p>{result.message}</p>
-      <div className="threshold-callout"><span>Fixed operating threshold</span><strong>{result.acoustic.threshold}</strong><span>Applied to the spoof score</span></div>
+    <div className="result" ref={ref}>
+      <section className={`detection-verdict ${spoof ? "verdict-warning" : "verdict-inconclusive"}`} aria-label="Acoustic detection verdict">
+        <span className="verdict-icon"><VerdictIcon size={32} aria-hidden="true" /></span>
+        <span className="eyebrow">Analysis result</span>
+        <h2 className="verdict-title">{spoof ? "POTENTIAL SPOOF DETECTED" : "NO SPOOF ALERT — INCONCLUSIVE"}</h2>
+        <p>{spoof ? "Potential synthetic or manipulated speech signals detected. Verify independently." : "No acoustic spoof alert was raised. This does not verify that the recording is genuine or safe."}</p>
       <div className="score-grid">
-        {[
-          ["Spoof model score", result.acoustic.spoof_score],
-          ["Bonafide model score", result.acoustic.bonafide_score],
-        ].map(([label, value]) => (
-          <div key={label}>
-            <span>{label}</span>
-            <strong>{modelScore(value)}</strong>
-            <div className="score-track">
-              <div style={{ width: percent(value) }} />
-            </div>
-          </div>
-        ))}
+        <div><span>Spoof model score</span><strong>{modelScore(result.acoustic.spoof_score)}</strong></div>
+        <div><span>Fixed operating threshold</span><strong>{result.acoustic.threshold}</strong></div>
       </div>
+      <div className="verdict-comparison">{spoof ? "Spoof score meets or exceeds the fixed threshold" : "Spoof score is below the fixed threshold"}</div>
       <p className="caption">
-        Fixed alert threshold: {result.acoustic.threshold}. Model scores are not
-        calibrated probabilities of authenticity. The decision uses the spoof
-        operating threshold, not whichever class has the larger score.
+        Model scores are not confidence percentages or calibrated probabilities of authenticity.
       </p>
+      </section>
+      <details className="result-technical"><summary>Technical details & limitations</summary>
       <dl className="facts">
         <div>
           <dt>Source sample rate</dt>
@@ -75,6 +77,7 @@ export function Result({ result }) {
           ))}
         </div>
       </div>
+      </details>
     </div>
   );
 }

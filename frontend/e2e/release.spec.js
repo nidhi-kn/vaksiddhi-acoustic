@@ -24,7 +24,7 @@ test("upload rejects incomplete responses, reports errors and retries real infer
   await expect(button).toBeEnabled();
   await page.unroute("**/api/analyze");
   await button.click();
-  await expect(page.locator(".result .badge")).toHaveText("Potential Spoof Detected", { timeout: 30000 });
+  await expect(page.locator(".result .verdict-title")).toHaveText("POTENTIAL SPOOF DETECTED", { timeout: 30000 });
   await expect(page.locator(".score-grid")).toContainText("0.11987715");
   await page.goto("/history");
   await page.reload();

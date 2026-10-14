@@ -12,7 +12,7 @@ test("exact WAV files preserve CLI decisions through live API, rendering and his
   page,
 }) => {
   test.setTimeout(120000);
-  for (const [filename, prediction, label] of cases) {
+  for (const [filename, prediction] of cases) {
     const file = resolve(root, "test_audio", filename);
     const cli = JSON.parse(
       execFileSync(
@@ -52,7 +52,10 @@ test("exact WAV files preserve CLI decisions through live API, rendering and his
       path: `test-results/${filename}-result.png`,
       fullPage: true,
     });
-    await expect(page.locator(".result .badge")).toHaveText(label);
+    await expect(page.locator(".result .verdict-title")).toHaveText(prediction === "spoof" ? "POTENTIAL SPOOF DETECTED" : "NO SPOOF ALERT — INCONCLUSIVE");
+    await expect(page.locator(".result")).not.toContainText("Bonafide model score");
+    await expect(page.locator(".result .verdict-comparison")).toContainText(prediction === "spoof" ? "meets or exceeds" : "below");
+    await expect(page.locator(".result .result-technical")).not.toHaveAttribute("open", "");
     await expect(page.locator(".result")).toContainText(
       String(api.acoustic.threshold),
     );
@@ -66,8 +69,8 @@ test("exact WAV files preserve CLI decisions through live API, rendering and his
     const row = page.getByRole("row").filter({ hasText: filename });
     await expect(row.locator(".badge")).toHaveText(label);
     await row.getByRole("button", { name: `View ${filename}` }).click();
-    await expect(page.getByRole("dialog").locator(".result .badge")).toHaveText(
-      label,
+    await expect(page.getByRole("dialog").locator(".result .verdict-title")).toHaveText(
+      prediction === "spoof" ? "POTENTIAL SPOOF DETECTED" : "NO SPOOF ALERT — INCONCLUSIVE",
     );
     await page.keyboard.press("Escape");
     const records = await page.evaluate(() =>
@@ -82,7 +85,7 @@ test("exact WAV files preserve CLI decisions through live API, rendering and his
     await page.setViewportSize({ width, height: 900 });
     await page.getByRole("button", { name: "View spoof_1.wav" }).click();
     await expect(
-      page.getByRole("dialog").getByText("Potential Spoof Detected"),
+      page.getByRole("dialog").getByText("POTENTIAL SPOOF DETECTED", { exact: true }),
     ).toBeVisible();
     expect(
       await page.evaluate(
