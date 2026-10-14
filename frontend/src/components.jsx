@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { FileAudio, ArrowRight, Info, X, ChevronRight } from "lucide-react";
+import { FileAudio, ArrowRight, Info, X, ChevronRight, AudioLines } from "lucide-react";
 import { percent, date } from "./lib";
 import { predictionLabel, modelScore } from "./prediction";
 export function Badge({ prediction }) {
@@ -28,11 +28,12 @@ export function Empty({
 export function Result({ result }) {
   return (
     <div className="result">
-      <div className="section-title">
-        <h2>Analysis result</h2>
+      <div className="section-title result-heading">
+        <div><span className="eyebrow"><AudioLines size={13} /> ACOUSTIC SCREENING</span><h2>Analysis result</h2></div>
         <Badge prediction={result.acoustic.prediction} />
       </div>
       <p>{result.message}</p>
+      <div className="threshold-callout"><span>Fixed operating threshold</span><strong>{result.acoustic.threshold}</strong><span>Applied to the spoof score</span></div>
       <div className="score-grid">
         {[
           ["Spoof model score", result.acoustic.spoof_score],

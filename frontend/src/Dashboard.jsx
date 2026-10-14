@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useReducedMotion } from "framer-motion";
 import {
   AreaChart,
   Area,
@@ -20,8 +21,9 @@ import {
   CircleHelp,
 } from "lucide-react";
 import { raised } from "./lib";
-import { PageTitle, AnalysesTable, Empty } from "./components";
+import { AnalysesTable, Empty } from "./components";
 export default function Dashboard({ items, onSelect }) {
+  const reducedMotion = useReducedMotion();
   const [range, setRange] = useState("7"),
     alerts = items.filter(raised).length;
   const chart = Array.from({ length: Number(range) }, (_, i) => {
@@ -59,21 +61,40 @@ export default function Dashboard({ items, onSelect }) {
   ];
   return (
     <>
-      <PageTitle
-        eyebrow="YOUR ACOUSTIC WORKSPACE"
-        title="A clearer signal."
-        text="Screen recordings. Understand the scores. Stay informed."
-      >
-        <Link to="/analyze" className="button">
-          <Upload size={17} /> Analyze audio <ArrowRight size={17} />
-        </Link>
-      </PageTitle>
+      <section className="acoustic-hero" aria-labelledby="workspace-heading">
+        <div className="hero-copy">
+          <span className="hero-kicker"><AudioLines size={14} /> LOCAL ACOUSTIC SCREENING</span>
+          <h1 id="workspace-heading">A clearer signal.<br /><span>A closer look.</span></h1>
+          <p>Look beyond the voice. Screen a recording for acoustic spoof cues, with the evidence in view.</p>
+          <div className="hero-actions">
+            <Link to="/analyze" className="button"><Upload size={17} /> Analyze audio <ArrowRight size={17} /></Link>
+            <Link to="/demo" className="hero-secondary">Explore the demo <ArrowRight size={15} /></Link>
+          </div>
+          <span className="hero-footnote"><ShieldCheck size={14} /> Local inference <span aria-hidden="true">·</span> Your audio stays on this device</span>
+        </div>
+        <div className="acoustic-art" aria-hidden="true">
+          <div className="acoustic-orbit orbit-one" /><div className="acoustic-orbit orbit-two" />
+          <div className="acoustic-orbit orbit-three" />
+          <div className="acoustic-core"><AudioLines size={30} /></div>
+          <svg viewBox="0 0 400 180" className="hero-wave" focusable="false">
+            <defs><linearGradient id="hero-wave-ink"><stop stopColor="#b9a5ee" /><stop offset=".5" stopColor="#7351d4" /><stop offset="1" stopColor="#b9a5ee" /></linearGradient></defs>
+            <g className="waveform-band" fill="url(#hero-wave-ink)">
+              {Array.from({ length: 55 }, (_, i) => {
+                const height = 8 + Math.pow(Math.sin(i * .49), 2) * (22 + 90 * Math.pow(Math.sin(i / 54 * Math.PI), 2));
+                return <rect key={i} x={i * 7.2 + 4} y={90 - height / 2} width="3" height={height} rx="1.5" />;
+              })}
+            </g>
+          </svg>
+          <span className="art-caption">THE VOICE. THE EVIDENCE.</span>
+        </div>
+      </section>
+      <div className="activity-heading"><span className="eyebrow">YOUR WORKSPACE AT A GLANCE</span><span>Locally saved activity · Not model performance</span></div>
       <div className="metric-grid">
         {metrics.map(([Icon, label, value, detail]) => (
           <div className="metric" key={label}>
-            <div>
+            <div className="metric-heading">
               <span>{label}</span>
-              <Icon size={19} />
+              <span className="metric-symbol"><Icon size={19} /></span>
             </div>
             <strong>{value}</strong>
             <p>{detail}</p>
@@ -124,18 +145,25 @@ export default function Dashboard({ items, onSelect }) {
                     axisLine={false}
                     width={30}
                   />
-                  <Tooltip />
+                  <Tooltip
+                    contentStyle={{ borderRadius: 12, border: "1px solid #e5def1", boxShadow: "0 8px 24px #33234c12", fontSize: 12 }}
+                    labelStyle={{ color: "#372d50", fontWeight: 600, marginBottom: 6 }}
+                    formatter={(value, name) => [value, name === "analyses" ? "Completed analyses" : "Spoof alerts"]}
+                    cursor={{ stroke: "#b7a5de", strokeDasharray: "3 3" }}
+                  />
                   <Area
                     dataKey="analyses"
                     stroke="#7b61d8"
                     fill="url(#chartFill)"
                     strokeWidth={2}
+                    isAnimationActive={!reducedMotion}
                   />
                   <Area
                     dataKey="alerts"
                     stroke="#db9250"
                     fill="transparent"
                     strokeWidth={2}
+                    isAnimationActive={!reducedMotion}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -145,6 +173,7 @@ export default function Dashboard({ items, onSelect }) {
               <Activity size={28} />
               <h3>No activity yet</h3>
               <p>Your completed analyses will appear here.</p>
+              <Link className="text-link" to="/analyze">Start with a recording <ArrowRight size={15} /></Link>
             </div>
           )}
         </section>
